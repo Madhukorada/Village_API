@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Digital_Village_Api.Application\Digital_Village_Api.Application.csproj" />
+    <ProjectReference Include="..\Digital_village_Api.Infrastructure\Digital_village_Api.Infrastructure.csproj" />
+    <ProjectReference Include="..\Digitial_Village_Api.Domain\Digitial_Village_Api.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+@Digital_Village_Api_HostAddress = http://localhost:5217
+
+GET {{Digital_Village_Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

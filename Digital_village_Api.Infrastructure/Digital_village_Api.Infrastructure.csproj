@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+  </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Digital_Village_Api.Application\Digital_Village_Api.Application.csproj" />
+	  <ProjectReference Include="..\Digitial_Village_Api.Domain\Digitial_Village_Api.Domain.csproj" />
+	</ItemGroup>
+</Project>

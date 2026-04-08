@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Digital_Village_Api.Application/Digital_Village_Api.Application.csproj" />
+  <Project Path="Digital_village_Api.Infrastructure/Digital_village_Api.Infrastructure.csproj" />
+  <Project Path="Digital_Village_Api/Digital_Village_Api.csproj" />
+  <Project Path="Digitial_Village_Api.Domain/Digitial_Village_Api.Domain.csproj" />
+</Solution>

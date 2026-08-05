@@ -17,7 +17,7 @@ namespace Digital_Village_Api.Controllers
         }
         [HttpPost]
         [Route("AddCitizen")]
-        public Response AddCitizen([FromForm] Citizen CT)
+        public Response AddCitizen( Citizen CT)
         {
             var Added = CitizenService.AddCitizen(CT);
             if (Added)

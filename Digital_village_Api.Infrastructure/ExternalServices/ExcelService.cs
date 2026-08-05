@@ -37,6 +37,9 @@ namespace Digital_village_Api.Infrastructure.ExternalServices
                         worksheet.Cell(1, 6).Value = "Mobile";
                         worksheet.Cell(1, 7).Value = "FamilyHead";
                         worksheet.Cell(1, 8).Value = "Villagecode";
+                        //worksheet.Cell(1, 9).Value = "Password";
+                        //worksheet.Cell(1, 10).Value = "ConfirmPassword";
+
 
                         workbook.SaveAs(filePath);
                     }
@@ -44,6 +47,8 @@ namespace Digital_village_Api.Infrastructure.ExternalServices
                 using (var workbook = new XLWorkbook(filePath))
                 {
                     var worksheet = workbook.Worksheet("Citizens");
+                    worksheet.Cell(1, 9).Value = "Password";
+                    worksheet.Cell(1, 10).Value = "ConfirmPassword";
 
                     int lastRow = worksheet.LastRowUsed()?.RowNumber() ?? 1;
 
@@ -64,6 +69,8 @@ namespace Digital_village_Api.Infrastructure.ExternalServices
                     worksheet.Cell(newRow, 6).Value = citizen.Mobile;
                     worksheet.Cell(newRow, 7).Value = citizen.FamilyHead;
                     worksheet.Cell(newRow, 8).Value = citizen.Villagecode;
+                    worksheet.Cell(newRow, 9).Value = citizen.Password;
+                    worksheet.Cell(newRow, 10).Value = citizen.ConfirmPassword;
 
                     workbook.Save();
                 }

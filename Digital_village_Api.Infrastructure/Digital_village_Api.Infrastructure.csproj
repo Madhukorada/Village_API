@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.9" />
   </ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Digital_Village_Api.Application\Digital_Village_Api.Application.csproj" />

@@ -26,7 +26,8 @@ namespace Digital_village_Api.Infrastructure.Repositories
                     FamilyHead = citizen.FamilyHead,
                     Villagecode = citizen.Villagecode,
                     UserName = citizen.UserName,
-                    Password = citizen.Password
+                    Password = citizen.Password,
+                    ConfirmPassword = citizen.ConfirmPassword,
                 };
                 var SaveInExcel = _IExcelservice.ExcelSave(ct);
                 if (SaveInExcel)

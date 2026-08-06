@@ -17,7 +17,7 @@ namespace Digital_Village_Api.Controllers
         }
         [HttpPost]
         [Route("AddCitizen")]
-        public Response AddCitizen( Citizen CT)
+        public Response AddCitizen(Citizen CT)
         {
             var Added = CitizenService.AddCitizen(CT);
             if (Added)
@@ -42,6 +42,13 @@ namespace Digital_Village_Api.Controllers
 
 
             }
+        }
+        [HttpGet]
+        [Route("GetCitizen")]
+        public ActionResult<List<Citizen>> GetCitizen()
+        {
+            var list = CitizenService.GetCitizens();
+            return Ok(list);
         }
 
     }

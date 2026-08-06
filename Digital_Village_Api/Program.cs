@@ -20,6 +20,9 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<ICitizenService, CitizenService>();
 builder.Services.AddScoped<ICitizenRepository, CitizenRepository>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
+builder.Services.AddScoped<ISellerRepository,SellerRepository>();
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<ISellerService, SellerService>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();

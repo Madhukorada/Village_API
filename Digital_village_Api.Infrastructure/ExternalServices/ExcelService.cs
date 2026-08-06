@@ -7,28 +7,28 @@ using System.Text;
 
 namespace Digital_village_Api.Infrastructure.ExternalServices
 {
-    public class ExcelService:IExcelService
+    public class ExcelService : IExcelService
     {
-        
+
         public bool ExcelSave(Citizen citizen)
         {
             try
             {
                 var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Data");
                 if (!Directory.Exists(folderPath))
-            {
-                Directory.CreateDirectory(folderPath);
-            }
-            var filePath = Path.Combine(folderPath, "citizens.xlsx");
-            
-              
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                var filePath = Path.Combine(folderPath, "citizens.xlsx");
+
+
                 if (!File.Exists(filePath))
                 {
                     using (var workbook = new XLWorkbook())
                     {
                         var worksheet = workbook.Worksheets.Add("Citizens");
 
-                       
+
                         worksheet.Cell(1, 1).Value = "Id";
                         worksheet.Cell(1, 2).Value = "FirstName";
                         worksheet.Cell(1, 3).Value = "LastName";
@@ -85,6 +85,85 @@ namespace Digital_village_Api.Infrastructure.ExternalServices
 
         }
 
+
+        public bool ExcelSaves<T>(T entity, string fileName, string sheetName)
+        {
+            try
+            {
+                var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Data");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                var filePath = Path.Combine(folderPath, fileName);
+
+                using var workbook = File.Exists(filePath)
+                    ? new XLWorkbook(filePath)
+                    : new XLWorkbook();
+
+                IXLWorksheet worksheet;
+
+                if (workbook.Worksheets.Any(x => x.Name == sheetName))
+                {
+                    worksheet = workbook.Worksheet(sheetName);
+                }
+                else
+                {
+                    worksheet = workbook.Worksheets.Add(sheetName);
+                }
+
+                var properties = typeof(T)
+                    .GetProperties()
+                    .Where(p => p.Name != "ConfirmPassword")
+                    .ToList();
+
+                // Create headers if they don't exist
+                if (worksheet.LastRowUsed() == null)
+                {
+                    for (int i = 0; i < properties.Count; i++)
+                    {
+                        worksheet.Cell(1, i + 1).Value = properties[i].Name;
+                    }
+                }
+
+                int lastRow = worksheet.LastRowUsed()?.RowNumber() ?? 1;
+
+                // Generate Id
+                var idProperty = properties.FirstOrDefault(p => p.Name == "Id");
+
+                int newId = 1;
+
+                if (idProperty != null && lastRow > 1)
+                {
+                    var lastId = worksheet.Cell(lastRow, 1).GetValue<int>();
+                    newId = lastId + 1;
+
+                    idProperty.SetValue(entity, newId);
+                }
+
+                int newRow = lastRow + 1;
+
+                // Save entity properties dynamically
+                for (int i = 0; i < properties.Count; i++)
+                {
+                    var value = properties[i].GetValue(entity);
+
+                    worksheet.Cell(newRow, i + 1).Value =
+                        value?.ToString() ?? string.Empty;
+                }
+
+                workbook.SaveAs(filePath);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while saving Excel: " + ex.Message);
+                return false;
+            }
+        }
 
     }
 }

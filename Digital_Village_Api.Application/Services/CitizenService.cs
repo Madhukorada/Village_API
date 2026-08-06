@@ -26,5 +26,11 @@ namespace Digital_Village_Api.Application.Services
 
             }
         }
+
+        public List<Citizen> GetCitizens()
+        {
+            var getlist = _citizenRepository.GetAllCitizens();
+            return getlist.ToList();
+        }
     }
 }

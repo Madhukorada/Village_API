@@ -5,10 +5,9 @@ using System.Text;
 
 namespace Digital_Village_Api.Application.Interface
 {
-    public interface IExcelService
+    public interface ISellerRepository
     {
-        public bool ExcelSave(Citizen citizen);
 
-        public bool ExcelSaves<T>(T entity, string fileName, string sheetName);
+        public string RegisterSeller(Seller seller);
     }
 }

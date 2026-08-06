@@ -8,6 +8,8 @@ namespace Digital_Village_Api.Application.Interface
     public interface ICitizenService
     {
         public bool AddCitizen(Citizen citizen);
-        
+
+        public List<Citizen> GetCitizens();
+
     }
 }

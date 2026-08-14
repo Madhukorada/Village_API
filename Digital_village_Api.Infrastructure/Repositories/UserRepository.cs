@@ -16,13 +16,6 @@ namespace Digital_village_Api.Infrastructure.Repositories
         {
             _villageDbContext = villageDbContext;
         }
-        public static List<User> users = new List<User>
-        {
-         new User{Id=1,UserName="admin",Email="admin@gmail.com",PasswordHash="Pass@123%",Role=new List<string> {"Admin","User"}},
-         new User{Id=2,UserName="user",Email="user@gmail.com",PasswordHash="Pass@123%",Role=new List<string> {"User"}},
-         new User{Id=3,UserName="test",Email="test@gmail.com",PasswordHash="Pass@123%",Role=new List<string> {"Admin"}},
-
-        };
 
         public async Task<UserInfo?> GetUserByUsernameAsync(string username)
 

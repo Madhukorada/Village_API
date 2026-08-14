@@ -7,6 +7,6 @@ namespace Digital_Village_Api.Application.Interface
 {
     public interface IImageService
     {
-        public Task<string> SaveImageAsync(IFormFile file, string folderName, Guid sellerId);
+        public Task<string> SaveImageAsync(IFormFile file, string folderName, string ShopGovtRegistrationId);
     }
 }

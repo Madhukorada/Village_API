@@ -8,7 +8,7 @@ namespace Digital_village_Api.Infrastructure.ExternalServices
 {
     public class ImageService: IImageService
     {
-        public  async Task<string> SaveImageAsync(IFormFile file, string folderName, Guid sellerId)
+        public  async Task<string> SaveImageAsync(IFormFile file, string folderName, string ShopGovtRegistrationId)
         {
             if (file == null || file.Length == 0)
                 return "no image";
@@ -23,7 +23,7 @@ namespace Digital_village_Api.Infrastructure.ExternalServices
                 Directory.CreateDirectory(folderPath);
             }
 
-            var fileName = sellerId + Path.GetExtension(file.FileName);
+            var fileName = ShopGovtRegistrationId + Path.GetExtension(file.FileName);
 
             var filePath = Path.Combine(folderPath, fileName);
 

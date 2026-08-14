@@ -1,5 +1,6 @@
 ﻿using Digital_Village_Api.Application.Interface;
 using Digitial_Village_Api.Domain.Entities;
+using Digitial_Village_Api.Domain.Persistence.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,9 +15,9 @@ namespace Digital_Village_Api.Application.Services
             _sellerRepository = sellerRepository;
         }
 
-        public string RegisterSeller(Seller seller)
+        public async Task<string> RegisterSeller(ViRegistration vi)
         {
-            var result = _sellerRepository.RegisterSeller(seller);
+            var result = await _sellerRepository.RegisterSeller(vi);
             return result;
         }
     }

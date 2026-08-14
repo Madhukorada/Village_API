@@ -21,18 +21,23 @@ namespace Digital_Village_Api.Application.Services
 
             public async Task<LoginResponse> LoginAsync(LoginRequest request)
             {
-                var user = await _userRepository
+                var UserInfo = await _userRepository
                     .GetUserByUsernameAsync(request.UserName);
 
-                if (user == null)
+                if (UserInfo == null)
                     return null;
 
-                if (user.PasswordHash != request.Password)
+                if (UserInfo.Password != request.Password)
                     return null;
 
                 return new LoginResponse
                 {
-                    Token = _jwtTokenGenerator.GenerateToken(user)
+                    Token = _jwtTokenGenerator.GenerateToken(UserInfo),
+                    Name=$"{UserInfo.FirstName} {UserInfo.LastName}",
+                    Role=UserInfo.Role,
+                    RegistrationId=UserInfo.RegistrationId
+
+
                 };
             }
         }

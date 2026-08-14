@@ -1,5 +1,7 @@
 ﻿using Digital_Village_Api.Application.Interface;
 using Digitial_Village_Api.Domain.Entities;
+using Digitial_Village_Api.Domain.Persistence;
+using Digitial_Village_Api.Domain.Persistence.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,55 +11,76 @@ namespace Digital_village_Api.Infrastructure.Repositories
     public class SellerRepository : ISellerRepository
     {
         public readonly IExcelService _IExcelservice;
-        public SellerRepository(IExcelService IExcelservice)
+        public readonly VillageDbContext _villageDbContext;
+        public SellerRepository(IExcelService IExcelservice,VillageDbContext villageDbContext )
         {
             _IExcelservice = IExcelservice;
+            _villageDbContext = villageDbContext;
         }
-        public string RegisterSeller(Seller seller)
+        public async Task<string> RegisterSeller(ViRegistration vr)
         {
             try
             {
-                if (seller != null)
+                if (vr == null)
                 {
-                    var sl = new Seller()
-                    {   SellerId= seller.SellerId,
-                        SellerName = seller.SellerName,
-                        Mobile = seller.Mobile,
-                        Email = seller.Email,
-                        Password = seller.Password,
-                        ConfirmPassword = seller.ConfirmPassword,
-                        ShopName = seller.ShopName,
-                        Country = seller.Country,
-                        State = seller.State,
-                        District = seller.District,
-                        Subdistrict = seller.Subdistrict,
-                        VillageName = seller.VillageName,
-                        ShopImageUrl = seller.ShopImageUrl
-
-                    };
-                    var SaveInExcel = _IExcelservice.ExcelSaves(sl, "Sellers.xlsx", "Sellers");
-                    if (SaveInExcel)
-                    {
-                        return "registration is success";
-                    }
-                    else
-                    {
-                        return "registration is failed";
-
-                    }
+                    return "No data received";
                 }
-                else
+
+                var vuser = new ViRegistration
                 {
-                    return "no data received";
+                    FirstName = vr.FirstName,
+                    LastName = vr.LastName,
+                    Mobile = vr.Mobile,
+                    Password = vr.Password,
+                    ConfirmPassword = vr.ConfirmPassword,
+                    Gender = vr.Gender,
+                    Email = vr.Email,
+                    Country = vr.Country,
+                    State = vr.State,
+                    District = vr.District,
+                    Subdistrict = vr.Subdistrict,
+                    VillageName = vr.VillageName,
+                    Pincode = vr.Pincode,
+                    Address = vr.Address,
+                    Role = vr.Role,
+                    ShopName = vr.ShopName,
+                    ShopImage = vr.ShopImage,
+                    ShopGovtRegistrationId = vr.ShopGovtRegistrationId,
+                    CreatedDate = DateTime.UtcNow
+                };
+
+                // Add record to DbContext
+                 await _villageDbContext.ViRegistrations.AddAsync(vuser);
+
+                // // Save record to SQL Server
+                var dbResult = await _villageDbContext.SaveChangesAsync();
+
+                if (dbResult <= 0)
+                {
+                    return "Registration failed in database";
                 }
+
+                // Save record to Excel
+                var saveInExcel = _IExcelservice.ExcelSaves(
+                    vuser,
+                    "user.xlsx",
+                    "user");
+
+                if (!saveInExcel)
+                {
+                    return "Data saved in database, but Excel save failed";
+                }
+
+                return "Registration is successful";
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return $"Registration failed: {ex}";
             }
         }
     }
-
-
 }
+
+
+
 

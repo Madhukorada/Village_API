@@ -4,7 +4,10 @@ using Digitial_Village_Api.Domain.Persistence;
 using Digitial_Village_Api.Domain.Persistence.Entities;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Digital_Village_Api.Application.DTO;
 
 namespace Digital_village_Api.Infrastructure.Repositories
 {
@@ -75,10 +78,23 @@ namespace Digital_village_Api.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return $"Registration failed: {ex}";
+                return $"Registration failed: {ex.Message}";
             }
         }
+         public async  Task<List<ShopResponseDto>> GetShops()
+        {
+            var result = await _villageDbContext.ViRegistrations.Where(x=>x.Role=="Seller")
+            .Select(x => new ShopResponseDto
+            {
+                ShopImage=x.ShopImage,
+                ShopName=x.ShopName,
+                VillageName=x.VillageName,
+                RegistrationId=x.RegistrationId
+            }).ToListAsync();
+            return result;
+        }
     }
+
 }
 
 

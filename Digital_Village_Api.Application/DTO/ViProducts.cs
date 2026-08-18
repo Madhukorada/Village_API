@@ -21,6 +21,12 @@ namespace Digital_Village_Api.Application.DTO
 
     public IFormFile? ProductImage { get; set; }
 
-    public string? ProductCategory { get; set; }
+    public int? ProductCategory { get; set; }
+
+    public decimal? ProductUnitValue { get; set; }
+
+    public string? ProductUnit { get; set; }
+
+    public bool IsActive { get; set; }
     }
 }

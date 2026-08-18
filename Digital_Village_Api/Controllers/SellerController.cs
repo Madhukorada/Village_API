@@ -3,6 +3,7 @@ using Digital_Village_Api.Application.Interface;
 using Digitial_Village_Api.Domain.Entities;
 using Digitial_Village_Api.Domain.Persistence.Entities;
 using DocumentFormat.OpenXml.Office2016.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -82,6 +83,26 @@ namespace Digital_Village_Api.Controllers
             }
 
 
+        }
+[Authorize(Roles = "Customer")]
+         [HttpGet]
+        [Route("Getshops")]
+        public async Task<ActionResult> Getshops()
+        {
+            try
+            {
+                var result = await _sellerService.Getshops();
+                   
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Message = ex.Message
+                });
+            }
         }
 
     }

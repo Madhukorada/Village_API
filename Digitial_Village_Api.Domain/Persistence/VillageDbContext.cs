@@ -24,6 +24,8 @@ public partial class VillageDbContext : DbContext
 
     public virtual DbSet<ViProduct> ViProducts { get; set; }
 
+    public virtual DbSet<ViProductCategory> ViProductCategories { get; set; }
+
     public virtual DbSet<ViRegistration> ViRegistrations { get; set; }
 
     public virtual DbSet<ViState> ViStates { get; set; }
@@ -102,17 +104,37 @@ public partial class VillageDbContext : DbContext
 
             entity.ToTable("Vi_Products");
 
-            entity.Property(e => e.ProductCategory).HasMaxLength(100);
+            entity.Property(e => e.IsActive).HasDefaultValue(true, "DF_Vi_Products_IsActive");
             entity.Property(e => e.ProductImageUrl).HasMaxLength(500);
             entity.Property(e => e.ProductName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ProductPrice).HasColumnType("decimal(10, 3)");
+            entity.Property(e => e.ProductUnit)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.ProductUnitValue).HasColumnType("decimal(10, 3)");
+
+            entity.HasOne(d => d.ProductCategoryNavigation).WithMany(p => p.ViProducts)
+                .HasForeignKey(d => d.ProductCategory)
+                .HasConstraintName("FK_Vi_Products_ProductCategory");
 
             entity.HasOne(d => d.Registration).WithMany(p => p.ViProducts)
                 .HasForeignKey(d => d.RegistrationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Vi_Products_Registration");
+        });
+
+        modelBuilder.Entity<ViProductCategory>(entity =>
+        {
+            entity.HasKey(e => e.CategoryId).HasName("PK__Vi_Produ__19093A0B4ADBFEB8");
+
+            entity.ToTable("Vi_ProductCategories");
+
+            entity.Property(e => e.CategoryName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<ViRegistration>(entity =>

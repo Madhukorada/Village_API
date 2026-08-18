@@ -19,10 +19,17 @@ public partial class ViProduct
 
     public string? ProductImageUrl { get; set; }
 
-    public string? ProductCategory { get; set; }
+    public int? ProductCategory { get; set; }
+
+    public decimal? ProductUnitValue { get; set; }
+
+    public string? ProductUnit { get; set; }
+
+    public bool IsActive { get; set; }
+
+    public virtual ViProductCategory? ProductCategoryNavigation { get; set; }
 
     public virtual ViRegistration Registration { get; set; } = null!;
 
     public virtual ICollection<ViOrderDetail> ViOrderDetails { get; set; } = new List<ViOrderDetail>();
-
 }

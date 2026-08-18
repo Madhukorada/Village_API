@@ -1,4 +1,5 @@
-﻿using Digitial_Village_Api.Domain.Entities;
+﻿using Digital_Village_Api.Application.DTO;
+using Digitial_Village_Api.Domain.Entities;
 using Digitial_Village_Api.Domain.Persistence.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Digital_Village_Api.Application.Interface
     {
 
         public Task<string> RegisterSeller(ViRegistration vr);
+        public Task<List<ShopResponseDto>> Getshops();
     }
 
 }

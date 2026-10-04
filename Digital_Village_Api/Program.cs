@@ -34,6 +34,7 @@ builder.Services.AddScoped<ISellerService, SellerService>();
 builder.Services.AddScoped<ICommonRepository,CommonRepository>();
 builder.Services.AddScoped<IProductRepository,ProductRepository>();
 builder.Services.AddScoped<IOrderRepository,OrderRepository>();
+builder.Services.AddScoped<IOrderRepository,OrderRepository>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -65,7 +66,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyPolicy", policy =>
     {
-        policy.AllowAnyOrigin()     
+        policy.AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
